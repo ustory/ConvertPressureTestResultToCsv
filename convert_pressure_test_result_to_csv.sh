@@ -4,9 +4,9 @@ echo "please enter total request number, step of concurrency, max of concurrency
 
 read total_request concurrency_step max_concurrency
 
-echo "please enter target url and other command -> "
+echo "please enter headers and target url (no blank) -> (Cookie:session=6785327; http://**.com/**)"
 
-read target
+read headers target
 
 current_concurrency=0
 date=`date +%Y-%m-%d`
@@ -21,8 +21,8 @@ add_concurrency_step(){
 }
 
 execute_pressure_test(){
-    echo "\n==> executor: ab -n${total_request} -c${current_concurrency} ${target} \n"
-    ab -n${total_request} -c${current_concurrency} ${target} >> ${test_log}
+    echo "\n==> executor: ab -n${total_request} -c${current_concurrency} -H '${headers}' ${target} \n"
+    ab -n${total_request} -c${current_concurrency} -H '${headers}' ${target} >> ${test_log}
 }
 
 convert_test_result_to_csv(){
