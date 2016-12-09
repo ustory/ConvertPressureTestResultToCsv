@@ -1,17 +1,18 @@
 #! /bin/sh
 
 echo "please enter total request number, step of concurrency, max of concurrency -> "
-
 read total_request concurrency_step max_concurrency
 
-echo "please enter headers and target url (no blank) -> (Cookie:session=6785327; http://**.com/**)"
+echo "please enter http headers (option) -> (Cookie:session=6785327;)"
+read headers
 
-read headers target
+echo "please enter target url -> "
+read target
 
 current_concurrency=0
-date=`date +%Y-%m-%d`
-test_log=/tmp/pressure_test_${date}.log
-csv_file=/tmp/pressure_test_${date}.csv
+date=`date +%Y-%m-%d/%H-%M`
+test_log=/tmp/pressure_tes/pressure_test_${date}.log
+csv_file=/tmp/pressure_tes/pressure_test_${date}.csv
 
 add_concurrency_step(){
     current_concurrency=`expr ${current_concurrency} + ${concurrency_step}`
@@ -26,7 +27,8 @@ execute_pressure_test(){
 }
 
 convert_test_result_to_csv(){
-    rm ${csv_file}
+    echo "write csv ${csv_file}"
+
     # file header
     echo "Concurrency Level, Time taken for tests(sec), Complete request, Failed requests, Requests per second, \c" >> ${csv_file}
     echo "Time per request of client(ms), Time per request of server(ms), Transfer rate(Kb/sec), 90% User Time per request(ms)" >> ${csv_file}
@@ -71,6 +73,9 @@ convert_test_result_to_csv(){
         fi
     done < ${test_log}
 
+    echo "finish write csv ${csv_file}"
+
+    echo "rm ${test_log}"
     rm ${test_log}
 }
 
