@@ -1,5 +1,8 @@
 #! /bin/sh
 
+echo "please enter api name -> "
+read api
+
 echo "please enter total request number, step of concurrency, max of concurrency -> "
 read total_request concurrency_step max_concurrency
 
@@ -11,7 +14,7 @@ read target
 
 current_concurrency=0
 date=`date +%Y-%m-%d/%H-%M`
-test_log=/tmp/pressure_tes/pressure_test_${date}.log
+test_log=/tmp/pressure_tes/pressure_test_${api}_${date}.log
 csv_file=/tmp/pressure_tes/pressure_test_${date}.csv
 
 add_concurrency_step(){
