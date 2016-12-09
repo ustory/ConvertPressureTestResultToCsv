@@ -12,10 +12,14 @@ read headers
 echo "please enter target url -> "
 read target
 
+base_dir=/tmp/pressure_test
+mkdir ${base_dir}
+
+date=`date +%Y-%m-%d_%H-%M`
+test_log=${base_dir}/pressure_test_${api}_${date}.log
+csv_file=${base_dir}/pressure_test_${api}_${date}.csv
+
 current_concurrency=0
-date=`date +%Y-%m-%d/%H-%M`
-test_log=/tmp/pressure_test_${api}_${date}.log
-csv_file=/tmp/pressure_test_${date}.csv
 
 add_concurrency_step(){
     current_concurrency=`expr ${current_concurrency} + ${concurrency_step}`
