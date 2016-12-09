@@ -14,8 +14,8 @@ read target
 
 current_concurrency=0
 date=`date +%Y-%m-%d/%H-%M`
-test_log=/tmp/pressure_tes/pressure_test_${api}_${date}.log
-csv_file=/tmp/pressure_tes/pressure_test_${date}.csv
+test_log=/tmp/pressure_test_${api}_${date}.log
+csv_file=/tmp/pressure_test_${date}.csv
 
 add_concurrency_step(){
     current_concurrency=`expr ${current_concurrency} + ${concurrency_step}`
