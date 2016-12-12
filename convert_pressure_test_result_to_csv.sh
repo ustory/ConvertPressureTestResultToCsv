@@ -3,13 +3,13 @@
 echo "please enter api name -> "
 read api
 
-echo "please enter total request number, step of concurrency, max of concurrency -> "
+echo "please enter total request number, step of concurrency, max of concurrency -> (10000 5 2000)"
 read total_request concurrency_step max_concurrency
 
 echo "please enter http headers (option) -> (Cookie:session=6785327;)"
 read headers
 
-echo "please enter target url -> "
+echo "please enter target url -> (http://**.com/hi)"
 read target
 
 base_dir=/tmp/pressure_test
