@@ -29,7 +29,7 @@ add_concurrency_step(){
 }
 
 execute_pressure_test(){
-    echo "\n==> executor: ab -n${total_request} -c${current_concurrency} -H '${headers}' ${target} \n"
+    echo -e "\n==> executor: ab -n${total_request} -c${current_concurrency} -H '${headers}' ${target} \n"
     ab -n${total_request} -c${current_concurrency} -H '${headers}' ${target} >> ${test_log}
 }
 
@@ -37,46 +37,46 @@ convert_test_result_to_csv(){
     echo "write csv ${csv_file}"
 
     # file header
-    echo "Concurrency Level, Time taken for tests(sec), Complete request, Failed requests, Requests per second, \c" >> ${csv_file}
+    echo -e "Concurrency Level, Time taken for tests(sec), Complete request, Failed requests, Requests per second, \c" >> ${csv_file}
     echo "Time per request of client(ms), Time per request of server(ms), Transfer rate(Kb/sec), 90% User Time per request(ms)" >> ${csv_file}
 
     while read line; do
         # new circle of test
         if ( echo ${line} | grep 'Concurrency Level' ) ; then
-            echo `echo ${line} | awk '{print $3}'`"\c" >> ${csv_file}
+            echo -e `echo ${line} | awk '{print $3}'`"\c" >> ${csv_file}
         fi
 
         if ( echo ${line} | grep 'Time taken for tests' ) ; then
-            echo ","`echo ${line} | awk '{print $5}'`"\c" >> ${csv_file}
+            echo -e ","`echo ${line} | awk '{print $5}'`"\c" >> ${csv_file}
         fi
 
         if ( echo ${line} | grep 'Complete requests' ) ; then
-            echo ","`echo ${line} | awk '{print $3}'`"\c" >> ${csv_file}
+            echo -e ","`echo ${line} | awk '{print $3}'`"\c" >> ${csv_file}
         fi
 
         if ( echo ${line} | grep 'Failed requests' ) ; then
-            echo ","`echo ${line} | awk '{print $3}'`"\c" >> ${csv_file}
+            echo -e ","`echo ${line} | awk '{print $3}'`"\c" >> ${csv_file}
         fi
 
         if ( echo ${line} | grep 'Requests per second' ) ; then
-            echo ","`echo ${line} | awk '{print $4}'`"\c" >> ${csv_file}
+            echo -e ","`echo ${line} | awk '{print $4}'`"\c" >> ${csv_file}
         fi
 
         if ( echo ${line} | grep 'Time per request' | grep -v 'across all concurrent requests' ) ; then
-            echo ","`echo ${line} | awk '{print $4}'`"\c" >> ${csv_file}
+            echo -e ","`echo ${line} | awk '{print $4}'`"\c" >> ${csv_file}
         fi
 
         if ( echo ${line} | grep 'Time per request' | grep 'across all concurrent requests' ) ; then
-            echo ","`echo ${line} | awk '{print $4}'`"\c" >> ${csv_file}
+            echo -e ","`echo ${line} | awk '{print $4}'`"\c" >> ${csv_file}
         fi
 
         if ( echo ${line} | grep 'Transfer rate' ) ; then
-            echo ","`echo ${line} | awk '{print $3}'`"\c" >> ${csv_file}
+            echo -e ","`echo ${line} | awk '{print $3}'`"\c" >> ${csv_file}
         fi
 
         if ( echo ${line} | grep '90%' ) ; then
             echo ","`echo ${line} | awk '{print $2}'` >> ${csv_file}
-            echo "\n================ *** *** =====================\n"
+            echo -e "\n================ *** *** =====================\n"
         fi
     done < ${test_log}
 
